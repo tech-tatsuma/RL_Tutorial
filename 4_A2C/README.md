@@ -83,3 +83,8 @@ $$
 
 * 並列環境の構築が複雑（`SubprocVecEnv`など）
 * 長期的な依存関係は捉えづらい（将来的にはLSTMなどの導入も検討）
+
+## 参考文献
+
+- [Asynchronous methods for deep reinforcement learning](https://arxiv.org/abs/1602.01783)
+- [End-to-end Reinforcement Learning for Autonomous Longitudinal Control Using Advantage Actor Critic with Temporal Context](https://ieeexplore.ieee.org/document/8917387/)

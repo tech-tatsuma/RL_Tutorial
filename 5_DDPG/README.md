@@ -61,3 +61,9 @@ DDPG は連続アクション空間を持つ環境に適した、アクター・
 
 * 離散アクション空間（例：CartPole）には DDPG は適していない。
 * 連続アクション空間（例：Pendulum, BipedalWalker）での使用が前提。
+
+## 参考文献
+
+- [Deterministic Policy Gradient Algorithms](https://proceedings.mlr.press/v32/silver14.pdf)
+- [Continuous control with deep reinforcement learning](https://arxiv.org/abs/1509.02971)
+- [Deep Deterministic Policy Gradient](https://spinningup.openai.com/en/latest/algorithms/ddpg.html#)

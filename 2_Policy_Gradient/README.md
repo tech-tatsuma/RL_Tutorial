@@ -53,8 +53,3 @@ optimizer.step()
 
 - **早期終了**: 100エピソード移動平均が一定水準に達した場合に学習を打ち切り
 - **報酬正規化**: 高分散なリターンによる不安定性を抑える
-
-
-## 参考文献
-
-- Williams, R.J., 1992. "Simple statistical gradient-following algorithms for connectionist reinforcement learning." *Machine Learning*
