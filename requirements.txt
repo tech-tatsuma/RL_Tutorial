@@ -1,3 +1,7 @@
-numpy
+numpy<1.24
 pandas
 matplotlib
+argparse
+gym[classic_control]
+tensorboardX
+imageio[ffmpeg]
