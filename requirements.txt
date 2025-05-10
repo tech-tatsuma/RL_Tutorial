@@ -3,6 +3,4 @@ pandas
 matplotlib
 argparse
 gym[classic_control]
-gym==0.26.2
-tensorboardX
 imageio[ffmpeg]
