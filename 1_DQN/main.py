@@ -203,7 +203,6 @@ def main():
     writer.close()
     print(f"Saved combined training video to {output_path}")
 
-    # （任意）一時ファイル削除
     shutil.rmtree("temp_videos")
 
     # 学習後のモデルで動画を保存

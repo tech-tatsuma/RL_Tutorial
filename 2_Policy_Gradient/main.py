@@ -33,7 +33,7 @@ class Policy(nn.Module):
 # ============================
 def record_episode(policy, env, max_steps=10000):
     frames = []
-    state = env.reset()
+    state, _ = env.reset()
     done = False
     steps = 0
     while not done and steps < max_steps:
@@ -43,7 +43,8 @@ def record_episode(policy, env, max_steps=10000):
             probs = policy(state_t)
         action = probs.argmax(dim=1).item()
 
-        next_state, reward, done, _ = env.step(action)
+        next_state, reward, terminated, truncated, _ = env.step(action)
+        done = terminated or truncated
         frame = env.render()
         frames.append(frame)
         state = next_state
@@ -111,15 +112,17 @@ def main():
 
     # 学習ループ
     for i_episode in count(1):
-        state = env.reset()
+        state, _ = env.reset()
         for t in range(1, 10001):
             # 行動選択＆保存
             state_t = torch.from_numpy(state).float().unsqueeze(0)
             probs = policy(state_t)
             m = Categorical(probs)
             action = m.sample()
+            action_int = action.item()
             policy.saved_log_probs.append(m.log_prob(action))
-            state, reward, done, _ = env.step(action.item())
+            next_state, reward, terminated, truncated, _ = env.step(action_int)
+            done = terminated or truncated
             policy.rewards.append(reward)
             if done:
                 break
