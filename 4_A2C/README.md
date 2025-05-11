@@ -58,9 +58,9 @@ $$
 
 6. **総合損失関数**：
 
-$$
+```math
 \mathcal{L}=\mathcal{L}_{\text{actor}}+\lambda{\cdot}\mathcal{L}_{\text{critic}}+\beta{\cdot}\mathcal{L}_{\text{entropy}}
-$$
+```
 
 ---
 
