@@ -63,3 +63,8 @@ DDPGの改良版。
 - Twin Delayed DDPG
     - 論文: Fujimoto, S., Hoof, H., & Meger, D. (2018). Addressing Function Approximation Error in Actor-Critic Methods.
     - URL: https://arxiv.org/abs/1802.09477
+
+## 作られる方策
+![Cartpole](assets/cartpole.gif)
+
+![Pendulum](assets/pendulum.gif)
