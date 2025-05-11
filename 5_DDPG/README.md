@@ -1,6 +1,6 @@
-## Deep Deterministic Policy Gradient (DDPG) アルゴリズム解説
+# Deep Deterministic Policy Gradient (DDPG) アルゴリズム
 
-DDPG は連続アクション空間を持つ環境に適した、アクター・クリティック型のオフポリシー強化学習アルゴリズムです。以下に、このコードにおける DDPG の仕組みを解説します。
+DDPG は連続アクション空間を持つ環境に適した、アクター・クリティック型のオフポリシー強化学習アルゴリズムです。
 
 ### 特徴
 

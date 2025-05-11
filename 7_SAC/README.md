@@ -1,6 +1,6 @@
-# Soft Actor-Critic (SAC) のアルゴリズム説明
+# Soft Actor-Critic (SAC) のアルゴリズム
 
-このドキュメントは、Soft Actor-Critic (SAC) の仕組みと実装の要点を日本語で解説したものです。
+このドキュメントは、Soft Actor-Critic (SAC) の仕組みと解説したものです。
 
 ## 概要
 
@@ -10,14 +10,14 @@ Soft Actor-Critic (SAC) は、最大エントロピー強化学習（Maximum Ent
 
 * **Actor（方策ネットワーク）**: 状態 $s$ を入力として、正規分布の平均 $\mu$ と標準偏差 $\sigma$ を出力し、サンプリング後に $\tanh$ を通じて行動 $a$ を決定します。
 * **Critic（状態価値関数）**: 状態 $s$ に対して状態価値 $V(s)$ を出力します。
-* **Qネットワーク**: 状態 $s$ と行動 $a$ を入力として、$Q(s, a)$ を出力します。
+* **Qネットワーク**: 状態 $s$ と行動 $a$ を入力として、$`Q(s, a)`$ を出力します。
 * **Target Value Network**: Critic のスローポリシーコピーであり、安定したターゲット値を生成するために使用されます。
 
 ## 損失関数
 
-* **Q損失**: $\mathcal{L}*Q=\mathbb{E}\[(Q(s,a)-(r+\gamma(1-d)V*{\text{target}}(s')))^2]$
-* **Value損失**: $\mathcal{L}\_V=\mathbb{E}\[(V(s)-(Q(s,a')-\log\pi(a'|s)))^2]$
-* **Policy損失**: $\mathcal{L}\_\pi=\mathbb{E}\[\log \pi(a|s)-Q(s,a)]$
+* **Q損失**: $`\mathcal{L}*Q=\mathbb{E}\[(Q(s,a)-(r+\gamma(1-d)V*{\text{target}}(s')))^2]`$
+* **Value損失**: $`\mathcal{L}\_V=\mathbb{E}\[(V(s)-(Q(s,a')-\log\pi(a'|s)))^2]`$
+* **Policy損失**: $`\mathcal{L}\_\pi=\mathbb{E}\[\log \pi(a|s)-Q(s,a)]`$
 
 ## エージェントの処理の流れ
 
@@ -30,4 +30,4 @@ Soft Actor-Critic (SAC) は、最大エントロピー強化学習（Maximum Ent
 
 ## 探索戦略
 
-行動のサンプリングは、$\mu$ と $\sigma$ を用いた正規分布から行われ、$\tanh$ により動作範囲を制限します。加えてエントロピー項を損失関数に組み込むことで、過剰な決定性を避けた学習が可能です。
+行動のサンプリングは、$`\mu`$ と $\sigma$ を用いた正規分布から行われ、$`\tanh`$ により動作範囲を制限します。加えてエントロピー項を損失関数に組み込むことで、過剰な決定性を避けた学習が可能です。
