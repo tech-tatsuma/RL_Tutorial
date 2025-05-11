@@ -62,7 +62,7 @@ class DQN:
         if len(self.memory) < self.batch_size:
             return
 
-        # ランダムにバッチをサンプリング
+        # リプレイバッファからランダムにバッチデータを取得
         batch = np.random.choice(len(self.memory), self.batch_size, replace=False)
         states = torch.tensor([self.memory[i].state for i in batch], dtype=torch.float32)
         actions= torch.tensor([self.memory[i].action for i in batch], dtype=torch.int64).view(-1,1)
@@ -111,6 +111,7 @@ def record_episode(model, env, max_steps=10000):
 # 学習ループと早期終了処理
 # ============================
 def main():
+    # 入力引数を処理
     parser = argparse.ArgumentParser()
     parser.add_argument('--env',       type=str, default='CartPole-v1')
     parser.add_argument('--max_eps',   type=int, default=5000)
@@ -120,11 +121,13 @@ def main():
     parser.add_argument('--fps',       type=int, default=30)
     args = parser.parse_args()
 
+    # 実験環境の準備
     env = gym.make(args.env, render_mode='rgb_array')
     num_state  = env.observation_space.shape[0]
     num_action = env.action_space.n
-    agent = DQN(num_state, num_action)
-    Transition = namedtuple('Transition', ['state','action','reward','next_state','done'])
+
+    agent = DQN(num_state, num_action) # Agentの初期化
+    Transition = namedtuple('Transition', ['state','action','reward','next_state','done']) # リプレイバッファの初期化
 
     # εのスケジューリング
     epsilon_start, epsilon_end, eps_decay = 1.0, 0.01, 1000
@@ -137,16 +140,16 @@ def main():
     demo_video_paths = []
     
     for ep in range(1, args.max_eps+1):
-        state, _ = env.reset()
+        state, _ = env.reset() # 環境をリセット
         total_r = 0.0
         done = False
-        epsilon = max(epsilon_end, epsilon_start - ep*(epsilon_start-epsilon_end)/eps_decay)
+        epsilon = max(epsilon_end, epsilon_start - ep*(epsilon_start-epsilon_end)/eps_decay) # epsilonのスケジューリング
         while not done:
-            action = agent.select_action(state, epsilon)
-            next_state, r, terminated, truncated, _ = env.step(action)
+            action = agent.select_action(state, epsilon) # 行動を決定
+            next_state, r, terminated, truncated, _ = env.step(action) # 行動を実行し、環境からのフィードバックを取得
             done = terminated or truncated
-            agent.store(Transition(state, action, r, next_state, done))
-            agent.update()
+            agent.store(Transition(state, action, r, next_state, done)) # リプレイバッファに格納
+            agent.update() # ネットワークを学習
             state = next_state
             total_r += r
         rewards.append(total_r)

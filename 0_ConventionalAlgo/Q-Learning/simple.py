@@ -87,10 +87,10 @@ def q_learning():
         while not is_terminal:
             action = choose_action(state,q_table) # 行動選択
             next_state, reward = get_env_feedback(state, action) # 環境応答取得
-            next_q = q_table.loc[state, action]
+            next_q = q_table.loc[state, action] # 現在の状態と行動からQ値を取得
 
             # Q値更新
-            if next_state == 'terminal':
+            if next_state == 'terminal': # ゴールに到着するとき
                 is_terminal = True
                 q_target = reward
             else:

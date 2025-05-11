@@ -1,4 +1,4 @@
-# A2C (Advantage Actor-Critic) アルゴリズムの概要
+# A2C (Advantage Actor-Critic) アルゴリズム
 
 ## 概要
 
@@ -41,35 +41,26 @@ $$
 3. **Actor の損失**：
 
 $$
-\mathcal{L}_{\text{actor}} = -\log \pi_\theta(a_t|s_t) \cdot A_t
+\mathcal{L}_{\text{actor}}=-\log \pi_\theta(a_t|s_t)\cdot{A_t}
 $$
 
 4. **Critic の損失**：
 
 $$
-\mathcal{L}_{\text{critic}} = (V(s_t) - R_t)^2
+\mathcal{L}_{\text{critic}}=(V(s_t)-R_t)^2
 $$
 
 5. **エントロピー正則化**（探索を促すため）：
 
 $$
-\mathcal{L}_{\text{entropy}} = -\sum \pi(a|s) \log \pi(a|s)
+\mathcal{L}_{\text{entropy}}=-\sum{\pi}(a|s)\log{\pi(a|s)}
 $$
 
 6. **総合損失関数**：
 
 $$
-\mathcal{L} = \mathcal{L}_{\text{actor}} + \lambda \cdot \mathcal{L}_{\text{critic}} + \beta \cdot \mathcal{L}_{\text{entropy}}
+\mathcal{L}=\mathcal{L}_{\text{actor}}+\lambda{\cdot}\mathcal{L}_{\text{critic}}+\beta{\cdot}\mathcal{L}_{\text{entropy}}
 $$
-
----
-
-## 本実装の特徴（コードの観点から）
-
-* `SubprocVecEnv` によって複数環境を並列実行し、効率的に経験収集を行う。
-* `torch.distributions.Categorical` を用いて確率分布から行動をサンプリング。
-* `record_episode()` 関数によりエピソードをレンダリングして可視化・動画保存。
-* Early stopping やベストモデル保存など、学習制御も実装済み。
 
 ---
 
@@ -78,11 +69,6 @@ $$
 * **高いサンプル効率**（バッチで学習）
 * **並列実行**により高速化
 * **安定性向上**（バイアス・分散のトレードオフをうまく処理）
-
-## デメリット
-
-* 並列環境の構築が複雑（`SubprocVecEnv`など）
-* 長期的な依存関係は捉えづらい（将来的にはLSTMなどの導入も検討）
 
 ## 参考文献
 

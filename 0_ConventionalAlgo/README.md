@@ -1,4 +1,4 @@
-# 0_Conventional_algoの概要説明
+# 0_ConventionalAlgoの概要説明
 ## 実装アルゴリズム
 - Q-Learning
 - SARSA
@@ -40,7 +40,7 @@ GridWorldは、強化学習における典型的な2次元環境であり、よ�
 この環境は、より複雑な戦略学習や経路探索タスクの評価、SARSAやQ-learningなどのアルゴリズムの挙動の違いを確認するために非常に有用です。エージェントは障害物を避け、報酬を最大化するルートを学習していきます。
 
 ## 実行方法
-`0_Conventional_Algo/`から以下のようなコマンドを実行
+`0_ConventionalAlgo/`から以下のようなコマンドを実行
 ```
 python -m Q-Learning.simple
 ```

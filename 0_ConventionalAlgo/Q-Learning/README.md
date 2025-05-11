@@ -1,6 +1,6 @@
 # Q学習 (Q-Learning) アルゴリズムの解説
 
-このドキュメントは、強化学習アルゴリズムである **Q学習 (Q-Learning)** の基本的な仕組みと、それをPythonで実装したプログラムについて数式を交えて解説します。
+このドキュメントは、 **Q学習 (Q-Learning)** の基本的な仕組みを実装方法とともに紹介します。
 
 ---
 
@@ -84,5 +84,5 @@ $$
 
 ## 参考文献
 
-- R. Sutton and A. Barto, "Reinforcement Learning: An Introduction"
+- [R. Sutton and A. Barto, "Reinforcement Learning: An Introduction"](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf)
 - [OpenAI Spinning Up Documentation](https://spinningup.openai.com/)
