@@ -65,16 +65,6 @@ DDPGの改良版。
     - URL: https://arxiv.org/abs/1802.09477
 
 ## 作られる方策
-<div style="display: flex; justify-content: center; gap: 20px;">
-
-  <div style="text-align: center;">
-    <img src="assets/cartpole.gif" width="200px" />
-    <div>CartPole</div>
-  </div>
-
-  <div style="text-align: center;">
-    <img src="assets/pendulum.gif" width="150px" />
-    <div>Pendulum</div>
-  </div>
-
-</div>
+| ![](assets/cartpole.gif) | ![](assets/pendulum.gif) |
+|:-------------------------:|:------------------------:|
+| CartPole                 | Pendulum                |
