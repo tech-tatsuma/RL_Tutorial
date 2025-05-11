@@ -1,5 +1,4 @@
 # 強化学習のチュートリアル
-代表的な強化学習手法の実装を通して強化学習について学ぶためのレポジトリです。
 
 ## 目次
 - [0_ConventionalAlgo](https://github.com/tech-tatsuma/RL_Tutorial/tree/master/0_ConventionalAlgo)
