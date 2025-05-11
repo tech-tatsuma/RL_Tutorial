@@ -21,7 +21,7 @@ Q学習やSARSAなど、古典的な強化学習アルゴリズム。
     - URL: https://link.springer.com/content/pdf/10.1007/BF00992698.pdf
 - SARSA
     - 論文: Rummery, G. A., & Niranjan, M. (1994). On-line Q-learning using connectionist systems. Technical Report CUED/F-INFENG/TR 166, Cambridge University Engineering Department.
-    - URL: https://www.researchgate.net/publication/220344150_Technical_Note_Q-Learning
+    - URL: https://mi.eng.cam.ac.uk/reports/svr-ftp/auto-pdf/rummery_tr166.pdf
 ### 1. Deep Q-Network(DQN)
 ディープラーニングを用いたQ学習の拡張であるDQN。
 - DQN
@@ -31,7 +31,7 @@ Q学習やSARSAなど、古典的な強化学習アルゴリズム。
 方策を直接最適化する手法である方策勾配法。
 - 方策勾配法
     - 論文: Sutton, R. S., McAllester, D. A., Singh, S. P., & Mansour, Y. (2000). Policy gradient methods for reinforcement learning with function approximation. In Advances in Neural Information Processing Systems (pp. 1057–1063).
-    - URL: https://papers.nips.cc/paper/1713-policy-gradient-methods-for-reinforcement-learning-with-function-approximation.pdf
+    - URL: https://proceedings.neurips.cc/paper/2000/file/464d828b85b0bed98e80ade0a5c43b0f-Paper.pdf
 ### 3. アクタークリティック(ActorCritic)
 アクターとクリティックの２つのネットワークを用いた手法。
 - アクタークリティック
@@ -42,7 +42,7 @@ A2Cは、アクタークリティックの改良版であり、より安定し�
 - Advantage Actor-Critic
     - 論文: Mnih, V., Badia, A. P., Mirza, M., et al. (2016). Asynchronous methods for deep reinforcement learning. In Proceedings of the 33rd International Conference on Machine Learning (pp. 1928–1937).
     - URL: https://arxiv.org/abs/1602.01783
-### 5. Deep Deterministic Polict Gradient(DDPG)
+### 5. Deep Deterministic Policy Gradient(DDPG)
 連続行動空間に対応したオフポリシー型の手法であるDDPGの実装例を含む。
 - Deep Deterministic Policy Gradient 
     - 論文: Lillicrap, T. P., Hunt, J. J., Pritzel, A., et al. (2015). Continuous control with deep reinforcement learning.
