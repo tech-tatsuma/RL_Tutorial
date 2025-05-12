@@ -125,30 +125,30 @@ class DDPGAgent:
 
     def select_action(self, state, noise=True):
         """ノイズ付きでアクション選択"""
-        state_t = torch.FloatTensor(state).to(self.device).unsqueeze(0)
-        action = self.actor(state_t).cpu().data.numpy().flatten()
+        state_t = torch.FloatTensor(state).to(self.device).unsqueeze(0) # 状態をテンソル化
+        action = self.actor(state_t).cpu().data.numpy().flatten() # ネットワークを通して行動を決定
         if noise:
-            action += self.noise.sample()
-        return action.clip(env.action_space.low, env.action_space.high)
+            action += self.noise.sample() # actionにノイズを付与
+        return action.clip(env.action_space.low, env.action_space.high) # actionをクリップ
 
     def train(self, iters):
         for _ in range(iters):
             if len(self.replay) < self.batch_size:
                 return
-            s, s2, a, r, d = self.replay.sample(self.batch_size)
+            s, s2, a, r, d = self.replay.sample(self.batch_size) # randomにサンプル
             s, s2, a, r, d = [t.to(self.device) for t in (s, s2, a, r, d)]
 
             # Critic update
             with torch.no_grad():
-                target_Q = self.critic_target(s2, self.actor_target(s2))
-                target_Q = r + d * self.gamma * target_Q
-            current_Q = self.critic(s, a)
-            critic_loss = F.mse_loss(current_Q, target_Q)
+                target_Q = self.critic_target(s2, self.actor_target(s2)) # criticからの出力を取得
+                target_Q = r + d * self.gamma * target_Q # TDターゲットを計算
+            current_Q = self.critic(s, a) # aにより変化後のstateのQ値を計算
+            critic_loss = F.mse_loss(current_Q, target_Q) # TD誤差を計算
             self.critic_opt.zero_grad()
             critic_loss.backward()
-            self.critic_opt.step()
+            self.critic_opt.step() # Criticを更新
 
-            actor_loss = -self.critic(s, self.actor(s)).mean()
+            actor_loss = -self.critic(s, self.actor(s)).mean() # actionはクリティックに通したあと得られる評価値をもとに更新
             self.actor_opt.zero_grad()
             actor_loss.backward()
             self.actor_opt.step()
@@ -201,11 +201,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     args.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+    # 実験環境をセット
     env = gym.make(args.env, render_mode='rgb_array')
     state_dim  = env.observation_space.shape[0]
     action_dim = env.action_space.shape[0]
     max_action = float(env.action_space.high[0])
 
+    # エージェントの初期化
     agent = DDPGAgent(state_dim, action_dim, max_action, args)
 
     os.makedirs("temp_videos", exist_ok=True)
@@ -221,11 +224,11 @@ if __name__ == "__main__":
         ep_reward = 0
 
         while True:
-            action = agent.select_action(state, noise=True)
-            next_state, reward, terminated, truncated, _ = env.step(action)
+            action = agent.select_action(state, noise=True) # 行動を選択
+            next_state, reward, terminated, truncated, _ = env.step(action) # actionを実行
             done = terminated or truncated
-            agent.replay.push((state, next_state, action, reward, done))
-            state = next_state
+            agent.replay.push((state, next_state, action, reward, done)) # レプレイバッファに保存
+            state = next_state # 状態の更新
             ep_reward += reward
             total_steps += 1
 
