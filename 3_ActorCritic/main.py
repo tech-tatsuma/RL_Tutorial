@@ -57,25 +57,25 @@ def record_episode(policy, env, max_steps=10000):
 # ============================
 def finish_episode(policy, optimizer, gamma, eps):
     R = 0
-    saved_actions = policy.saved_actions
+    saved_actions = policy.saved_actions # 選択した行動とその価値を取得
     policy_loss = []
     value_loss = []
     returns = []
 
-    for r in policy.rewards[::-1]:
-        R = r + gamma * R
+    for r in policy.rewards[::-1]: # rewardsをエピソード終了に近い方から探索
+        R = r + gamma * R # 割引率を考慮した累積報酬和
         returns.insert(0, R)
 
     returns = torch.tensor(returns)
-    returns = (returns - returns.mean()) / (returns.std() + eps)
+    returns = (returns - returns.mean()) / (returns.std() + eps) # 累積報酬和の正規化
 
     for (log_prob, value), r in zip(saved_actions, returns):
-        advantage = r - value.item()
-        policy_loss.append(-log_prob * advantage)
-        value_loss.append(F.smooth_l1_loss(value, torch.tensor([r])))
+        advantage = r - value.item() # アドバンテージの計算(aをとることが平均的な行動と比べてどれだけ良いか？)
+        policy_loss.append(-log_prob * advantage) # 方策損失の計算
+        value_loss.append(F.smooth_l1_loss(value, torch.tensor([r]))) # 価値損失の計算
 
     optimizer.zero_grad()
-    loss = torch.stack(policy_loss).sum() + torch.stack(value_loss).sum()
+    loss = torch.stack(policy_loss).sum() + torch.stack(value_loss).sum() # policy損失と価値損失の合計値を使って統合損失を計算
     loss.backward()
     optimizer.step()
 
@@ -95,10 +95,12 @@ def main():
     parser.add_argument('--fps', type=int, default=30)
     args = parser.parse_args()
 
+    # 実験環境をセット
     env = gym.make(args.env, render_mode='rgb_array')
     num_state = env.observation_space.shape[0]
     num_action = env.action_space.n
 
+    # Policy Networkをセット（actionとactionに対するvalueを出力）
     policy = Policy(num_state, num_action)
     optimizer = optim.Adam(policy.parameters(), lr=1e-2)
     eps = np.finfo(np.float32).eps.item()
@@ -110,22 +112,22 @@ def main():
 
     for ep in range(1, args.max_eps + 1):
         state, _ = env.reset()
-        total_r = 0
+        total_r = 0 # ログ出力のための変数
         for t in range(1, 10001):
             state_t = torch.tensor(state, dtype=torch.float32)
-            probs, value = policy(state_t)
+            probs, value = policy(state_t) # 状態をpolicy networkに入力
             m = Categorical(probs)
-            action = m.sample()
-            policy.saved_actions.append(SavedAction(m.log_prob(action), value))
-            next_state, reward, terminated, truncated, _ = env.step(action.item())
-            policy.rewards.append(reward)
-            total_r += reward
-            state = next_state
-            if terminated or truncated:
+            action = m.sample() # 確率的にactionを決定
+            policy.saved_actions.append(SavedAction(m.log_prob(action), value)) # 選択した行動とその価値を保存
+            next_state, reward, terminated, truncated, _ = env.step(action.item()) # actionを実行
+            policy.rewards.append(reward) # 環境から実際に返ってきた報酬を保存
+            total_r += reward 
+            state = next_state # 状態の更新
+            if terminated or truncated: # episodeが終了した場合
                 break
 
         rewards.append(total_r)
-        finish_episode(policy, optimizer, gamma=0.99, eps=eps)
+        finish_episode(policy, optimizer, gamma=0.99, eps=eps) # ネットワークのパラメータ更新
 
         if ep >= 100:
             avg100 = np.mean(rewards[-100:])
