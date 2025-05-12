@@ -40,7 +40,7 @@ class DQN:
         self.optimizer  = torch.optim.Adam(self.act_net.parameters(), lr=lr) # 最適化関数
         self.loss_func  = nn.MSELoss() # 損失関数
         self.update_count = 0 # 更新回数
-        self.update_target_every = update_target_every # ターゲットネット更新感覚
+        self.update_target_every = update_target_every # ターゲットネット更新間隔
 
     def select_action(self, state, epsilon=0.1):
         """ε-greedyにより行動選択"""

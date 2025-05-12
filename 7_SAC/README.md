@@ -14,10 +14,23 @@ Soft Actor-Critic (SAC) は、最大エントロピー強化学習（Maximum Ent
 * **Target Value Network**: Critic のスローポリシーコピーであり、安定したターゲット値を生成するために使用されます。
 
 ## 損失関数
+### Q損失
+```math
+\mathcal{L}_{Q}
+= \mathbb{E}\Bigl[\bigl(Q(s,a) - \bigl(r + \gamma (1 - d)\,V_{\mathrm{target}}(s')\bigr)\bigr)^{2}\Bigr]
+```
 
-* **Q損失**: $`\mathcal{L}*Q=\mathbb{E}\[(Q(s,a)-(r+\gamma(1-d)V*{\text{target}}(s')))^2]`$
-* **Value損失**: $`\mathcal{L}\_V=\mathbb{E}\[(V(s)-(Q(s,a')-\log\pi(a'|s)))^2]`$
-* **Policy損失**: $`\mathcal{L}\_\pi=\mathbb{E}\[\log \pi(a|s)-Q(s,a)]`$
+### Value損失
+```math
+\mathcal{L}_{V}
+= \mathbb{E}\Bigl[\bigl(V(s) - \bigl(Q(s,a') - \log \pi(a' \mid s)\bigr)\bigr)^{2}\Bigr]
+```
+
+### Policy損失
+```math
+\mathcal{L}_{\pi}
+= \mathbb{E}\bigl[\log \pi(a \mid s) - Q(s,a)\bigr]
+```
 
 ## エージェントの処理の流れ
 
